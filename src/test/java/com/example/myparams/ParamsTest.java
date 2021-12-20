@@ -14,7 +14,8 @@ import java.util.Map;
 
 public class ParamsTest {
     @Autowired
-    ParamController paramController;
+    private ParamController paramController;
+
     @Test
     public void testTransParam(){
         String params="{\n" +
@@ -38,4 +39,9 @@ public class ParamsTest {
             System.out.println(list.get(s));
         }
     }
+
+//    @Test
+//    public void testservce(){
+//        paramController.trPrams("sdsd");
+//    }
 }
