@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.myparams.entity.Params;
 import com.example.myparams.entity.Property;
 import com.example.myparams.service.ParamService;
+import com.example.myparams.util.ParamDealUtil;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 
-@Service
+@Service("paramService")
 public class ParamServiceImpl implements ParamService {
 
     @Override
@@ -29,23 +30,16 @@ public class ParamServiceImpl implements ParamService {
     public Params tranProp(HashMap<String, Object> hashMap) {
         Params params=new Params();
         HashMap<String, JSONObject> paramlist=new HashMap<String, JSONObject>();
-        for(String key:hashMap.keySet()){
-            Object value=hashMap.get(key);
+        for (String key:hashMap.keySet()){
             Property property=new Property();
+            Object value=hashMap.get(key);
             property.setPropName(key);
             property.setPropValue(value);
-            property.setEdit(true);
-            property.setNull(false);
-            property.setRange(null);
-            property.setSingle(true);
-            property.setPropType(value.getClass().toString());
-
+            //获取child子参数
+            property.setChildren(ParamDealUtil.getParamDeal(value));
             JSONObject jsonObject=JSONObject.parseObject(JSONObject.toJSONString(property));
-            paramlist.put(key,jsonObject);
+            paramlist.put(property.getPropName(),jsonObject);
 
-//            if(value.getClass().isArray());{
-//
-//            }
         }
         params.setParamList(paramlist);
         return params;

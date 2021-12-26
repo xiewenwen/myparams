@@ -18,6 +18,18 @@ public class Property {
     //参数是否需要编辑
     private boolean isEdit;
 
+
+    //参数下面的子函数
+    private Object children;
+
+    public Object getChildren() {
+        return children;
+    }
+
+    public void setChildren(Object children) {
+        this.children = children;
+    }
+
     public String getPropName() {
         return propName;
     }
@@ -77,7 +89,7 @@ public class Property {
     public Property() {
     }
 
-    public Property(String propName, Object propValue, String propType, boolean isNull, String[] range, boolean isSingle, boolean isEdit) {
+    public Property(String propName, Object propValue, String propType, boolean isNull, String[] range, boolean isSingle, boolean isEdit,Object children) {
         this.propName = propName;
         this.propValue = propValue;
         this.propType = propType;
@@ -85,6 +97,7 @@ public class Property {
         this.range = range;
         this.isSingle = isSingle;
         this.isEdit = isEdit;
+        this.children=children;
     }
 
     @Override
@@ -97,6 +110,7 @@ public class Property {
                 ", range=" + Arrays.toString(range) +
                 ", isSingle=" + isSingle +
                 ", isEdit=" + isEdit +
+                ", children="+children+
                 '}';
     }
 }

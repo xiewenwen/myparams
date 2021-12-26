@@ -3,18 +3,26 @@ package com.example.myparams;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.example.myparams.controller.ParamController;
+import com.example.myparams.entity.Params;
+import com.example.myparams.service.ParamService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+@SpringBootTest
 public class ParamsTest {
     @Autowired
     private ParamController paramController;
+
+    @Autowired
+    private ParamService paramService;
 
     @Test
     public void testTransParam(){
@@ -40,8 +48,21 @@ public class ParamsTest {
         }
     }
 
-//    @Test
-//    public void testservce(){
-//        paramController.trPrams("sdsd");
-//    }
+    @Test
+    public void testservce(){
+        HashMap<String,Object> list=new HashMap<String,Object>();
+        list.put("name","xirwenwen");
+        list.put("age",19);
+
+        HashMap<String, Object> params=new HashMap<String, Object>();
+        params.put("name","xienwewne");
+        params.put("age",18);
+        list.put("info",params);
+        Object[] array={params,params};
+        list.put("array",array);
+        paramService.tranProp(list);
+        Params params1=paramService.tranProp(list);
+        System.out.println(JSONObject.toJSONString(params1.getParamList(),SerializerFeature.DisableCircularReferenceDetect));
+
+    }
 }
